@@ -1,69 +1,58 @@
 ###################
-What is CodeIgniter
+Introduction
 ###################
 
-CodeIgniter is an Application Development Framework - a toolkit - for people
-who build web sites using PHP. Its goal is to enable you to develop projects
-much faster than you could if you were writing code from scratch, by providing
-a rich set of libraries for commonly needed tasks, as well as a simple
-interface and logical structure to access these libraries. CodeIgniter lets
-you creatively focus on your project by minimizing the amount of code needed
-for a given task.
+This is a sample set up of codeigniter 3.0 when you want to build a REST API. Go through the initial commit history and note the files that have been added. All API controllers should be a subclass of TT_REST_Controller.php.
 
-*******************
-Release Information
-*******************
+If you have a some POST functions that need to have basic authentication you can edit the _authenticate function in TT_REST_Controller to add you're logic. You can leverage the user_details property so that all authenticated API functions have access to a users details via : $this->user_details.
 
-This repo contains in-development code for future releases. To download the
-latest stable release please visit the `CodeIgniter Downloads
-<http://www.codeigniter.com/download>`_ page.
+By default all POST functions will go through "_authenticate" unless you add the following code to your controller (replace method names in the array):
 
-**************************
-Changelog and New Features
-**************************
+$this->open_methods = array('open_post');
 
-You can find a list of all changes for each release in the `user
-guide change log <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/changelog.rst>`_.
+###################
+Testing
+###################
 
-*******************
+Download the following plugin from the Google Chrome Store:
+https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo
+Once downloaded select "Request"
+
+************
+Testing GET Methods:
+************
+
+In the URL field set the url to something like this:
+
+http://dev.sample.com:8888/index.php/api/sample/list
+& the make sure the GET Radio button is selected.
+
+/api/sample/list - this is the important part. It means look into the api folder in the sample controller and call the list_get function. 
+
+************
+Testing POST Methods
+************
+
+In the URL field set the url to something like this:
+
+http://dev.sample.com:8888/index.php/api/sample/open
+& the make sure you add params in Payload section (switch it to form view and add some values eg. "sample_input" : 1. Refer the sample controller to see params you should test with
+
+/api/sample/open - this is the important part. It means look into the api folder in the sample controller and call the open_post function. 
+
+************
+Troubleshooting
+************
+
+- In advanced rest client make sure the "content-type" is set to application/x-www-form-urlencoded
+- If you've edited routes.php you might have to tweak this a bit.
+
+###################
 Server Requirements
-*******************
+###################
 
 PHP version 5.4 or newer is recommended.
 
 It should work on 5.2.4 as well, but we strongly advise you NOT to run
 such old versions of PHP, because of potential security and performance
 issues, as well as missing features.
-
-************
-Installation
-************
-
-Please see the `installation section <http://www.codeigniter.com/user_guide/installation/index.html>`_
-of the CodeIgniter User Guide.
-
-*******
-License
-*******
-
-Please see the `license
-agreement <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/license.rst>`_.
-
-*********
-Resources
-*********
-
--  `User Guide <http://www.codeigniter.com/docs>`_
--  `Language File Translations <https://github.com/bcit-ci/codeigniter3-translations>`_
--  `Community Forums <http://forum.codeigniter.com/>`_
--  `Community Wiki <https://github.com/bcit-ci/CodeIgniter/wiki>`_
--  `Community IRC <http://www.codeigniter.com/irc>`_
-
-Report security issues to our `Security Panel <mailto:security@codeigniter.com>`_, thank you.
-
-***************
-Acknowledgement
-***************
-
-The CodeIgniter team would like to thank EllisLab, all the
-contributors to the CodeIgniter project and you, the CodeIgniter user.
